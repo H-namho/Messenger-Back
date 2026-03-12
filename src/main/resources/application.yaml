@@ -1,0 +1,61 @@
+spring:
+  application:
+    name: MessengerProj
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+      # 개발 초기에는 update 추천
+      # 실행 시 엔티티 기준으로 테이블 구조를 자동 반영
+      # 운영에서는 보통 validate 또는 none 사용
+
+    properties:
+      hibernate:
+        format_sql: true
+        # SQL을 보기 좋게 줄바꿈해서 출력
+
+    show-sql: true
+    # 실행되는 SQL을 콘솔에 출력
+
+    open-in-view: false
+    # 실무에서는 보통 false 권장
+    # 컨트롤러까지 영속성 컨텍스트를 끌고 가지 않도록 설정
+    # N+1 문제를 더 빨리 발견하는 데도 도움됨
+
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 50MB
+      # 파일 업로드 제한
+      # 채팅 파일 첨부 기능 생각해서 미리 설정
+      # max-file-size : 파일 1개 최대 크기
+      # max-request-size : 요청 전체 최대 크기
+
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.orm.jdbc.bind: trace
+    # SQL 로그와 바인딩 파라미터 로그 출력
+    # 예: where email=? 에 실제 어떤 값이 들어갔는지 확인 가능
+    # 개발 단계에서는 매우 유용
+    # 운영에서는 trace는 보통 끔
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+    tags-sorter: alpha
+    # Swagger UI 접속 경로 및 정렬 방식
+    # 접속 주소: http://localhost:8080/swagger-ui.html
+
+  api-docs:
+    path: /v3/api-docs
+    # OpenAPI 문서 JSON 경로
+    # Swagger UI 내부에서도 이 문서를 기반으로 화면을 그림
+
+
+app:
+  upload:
+    path: uploads/
+    # 나중에 파일 업로드 기능 붙일 때 사용할 기본 업로드 경로
+    # 지금 당장 안 써도 미리 자리 잡아두면 편함
